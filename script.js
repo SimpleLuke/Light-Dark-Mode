@@ -13,34 +13,46 @@ const imageMode = (color) => {
   image3.src = `img/undraw_conceptual_idea_${color}.svg`;
 };
 
-// Dark Mode Styles
-const darkMode = () => {
-  nav.style.backgroundColor = "rgb(0 0 0/50%)";
-  textBox.style.backgroundColor = "rgb(255 255 255 / 50%)";
-  toggleIcon.children[0].textContent = "Dark Mode";
+// Toggle to Dark mode
+const toggleDarkMode = (isDark) => {
+  nav.style.backgroundColor = isDark
+    ? "rgb(0 0 0/50%)"
+    : "rgb(255 255 255/50%)";
+  textBox.style.backgroundColor = isDark
+    ? "rgb(255 255 255 / 50%)"
+    : "rgb(0 0 0 / 50%)";
+  toggleIcon.children[0].textContent = isDark ? "Dark Mode" : "Light Mode";
   toggleIcon.children[1].classList.replace("fa-sun", "fa-moon");
-  imageMode("dark");
+  isDark ? imageMode("dark") : imageMode("light");
 };
+// // Dark Mode Styles
+// const darkMode = () => {
+//   nav.style.backgroundColor = "rgb(0 0 0/50%)";
+//   textBox.style.backgroundColor = "rgb(255 255 255 / 50%)";
+//   toggleIcon.children[0].textContent = "Dark Mode";
+//   toggleIcon.children[1].classList.replace("fa-sun", "fa-moon");
+//   imageMode("dark");
+// };
 
-// Light Mode Styles
-const lightMode = () => {
-  nav.style.backgroundColor = "rgb(255 255 255/50%)";
-  textBox.style.backgroundColor = "rgb(0 0 0 / 50%)";
-  toggleIcon.children[0].textContent = "Dark Mode";
-  toggleIcon.children[1].classList.replace("fa-moon", "fa-sun");
-  imageMode("light");
-};
+// // Light Mode Styles
+// const lightMode = () => {
+//   nav.style.backgroundColor = "rgb(255 255 255/50%)";
+//   textBox.style.backgroundColor = "rgb(0 0 0 / 50%)";
+//   toggleIcon.children[0].textContent = "Dark Mode";
+//   toggleIcon.children[1].classList.replace("fa-moon", "fa-sun");
+//   imageMode("light");
+// };
 
 // Switch Theme Dynamically
 const switchTheme = (event) => {
   if (event.target.checked) {
     document.documentElement.setAttribute("data-theme", "dark");
     localStorage.setItem("theme", "dark");
-    darkMode();
+    toggleDarkMode(true);
   } else {
     document.documentElement.setAttribute("data-theme", "light");
     localStorage.setItem("theme", "light");
-    lightMode();
+    toggleDarkMode(false);
   }
 };
 
@@ -54,9 +66,9 @@ if (currentTheme) {
   document.documentElement.setAttribute("data-theme", currentTheme);
   if (currentTheme === "dark") {
     toggleSwitch.checked = true;
-    darkMode();
+    toggleDarkMode(true);
   } else {
     toggleSwitch.checked = false;
-    lightMode();
+    toggleDarkMode(false);
   }
 }
